@@ -1,6 +1,7 @@
 package dtlv.com.dtlv_application;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -16,11 +17,8 @@ import android.widget.LinearLayout;
  */
 public class Test2 extends Activity {
 
-    private GestionPoint gestPts;
-
-
-
     private int ptsT2 = 0;
+    private GestionPoint gestPts;
 
     private ImageButton btest2_play11 = null;
     private boolean quotation_11 = false;
@@ -89,19 +87,20 @@ public class Test2 extends Activity {
     private int count32=0;
     private int count33=0;
 
-
     public Test2(){
         gestPts = Menu.gestPts;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test2);
 
         final MediaPlayer mp11,mp12,mp13,mp21,mp22,mp23,mp31,mp32,mp33;
 
         btest2_play11 = (ImageButton) findViewById(R.id.test2_mot1_bplay);
+
         btest2_play11.setImageResource(R.drawable.play_blue);
         btest2_play11.setEnabled(true);
         btest2_play11.setClickable(true);
@@ -113,7 +112,8 @@ public class Test2 extends Activity {
         btest2_refuse11.setEnabled(false);
         btest2_refuse11.setClickable(false);
         btest2_refuse11.setImageResource(R.drawable.refuse_grey);
-        test2_layout11 = (LinearLayout) findViewById(R.id.layout11);
+
+        //test2_layout11 = (LinearLayout) findViewById(R.id.layout11);
 
 
         btest2_play12 = (ImageButton) findViewById(R.id.test2_mot2_bplay);
@@ -159,7 +159,6 @@ public class Test2 extends Activity {
         btest2_refuse22 = (ImageButton) findViewById(R.id.test2_refuse22);
         btest2_refuse22.setEnabled(false);
         btest2_refuse22.setClickable(false);
-
         btest2_play23 = (ImageButton) findViewById(R.id.test2_play23);
         btest2_play22.setEnabled(false);
         btest2_play22.setClickable(false);
@@ -202,7 +201,7 @@ public class Test2 extends Activity {
         btest2_next = (ImageButton) findViewById(R.id.test2_bnext);
         btest2_next.setEnabled(false);
         btest2_next.setClickable(false);
-
+        btest2_next.setImageResource(R.drawable.next_grey);
 
 
         // Word 1
@@ -302,18 +301,15 @@ public class Test2 extends Activity {
         mp12 = MediaPlayer.create(this, R.raw.test2_sound1_part2);
             btest2_play11.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-
                     if (count12 < 2) {
                         //garder le bouton appuyé le temps de l'écoute
                         //btest2_play11.setPressed(true);
                         //btest2_play11.setSelected(true);
-
                         mp12.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                             @Override
                             public void onCompletion(MediaPlayer mp) {
                                 //btest2_play13.setPressed(false);
                                 //btest2_play12.setSelected(false);
-
                                 if (count12 == 0) {
                                     //si c'est la première fois remplacer par bouton replay
                                     btest2_validate12.setEnabled(true);
@@ -323,7 +319,6 @@ public class Test2 extends Activity {
                                     btest2_refuse12.setEnabled(true);
                                     btest2_refuse12.setClickable(true);
                                     btest2_refuse12.setImageResource(R.drawable.refuse);
-
 
                                     // Activate next play button
                                     //btest2_play13.setEnabled(true);
@@ -335,8 +330,6 @@ public class Test2 extends Activity {
                                     btest2_play12.setEnabled(false);
                                     btest2_play12.setClickable(false);
                                 }
-
-
                                 count12++;
 
                             }
@@ -365,8 +358,6 @@ public class Test2 extends Activity {
                         btest2_next.setClickable(true);
                         btest2_next.setImageResource(R.drawable.next);
                     }
-
-
                     // QUESTION est-ce que s'il a reproduit une seule fois, après avoir noter on laisse le replay ou on le désactice?
                     btest2_play12.setImageResource(R.drawable.play_green);
                 }
@@ -386,11 +377,21 @@ public class Test2 extends Activity {
                         btest2_next.setClickable(true);
                         btest2_next.setImageResource(R.drawable.next);
                     }
-
                     // QUESTION est-ce que s'il a reproduit une seule fois, après avoir noter on laisse le replay ou on le désactice?
                     btest2_play12.setImageResource(R.drawable.play_green);
                 }
             });*/
+
+        btest2_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Au click sur le bouton, on passe au test suivant et on envoit le score a la gestion des points
+                gestPts.setT1(ptsT2);
+                Intent itest2 = new Intent(Test2.this, Test3.class);
+                startActivity(itest2);
+            }
+        });
+
     }
 
 
